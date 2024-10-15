@@ -1,23 +1,25 @@
 import cv2
 import numpy as np
+from matplotlib import pyplot as plt
 
 img = cv2.imread('moneditas.JPEG')
 
-gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-pimg = cv2.GaussianBlur(gris, (3, 3), 0)
+modified_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+modified_img = cv2.medianBlur(modified_img, 7)
+modified_img = cv2.GaussianBlur(modified_img, (5, 5), 0)
+modified_img = cv2.threshold(modified_img, 0, 150, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
 
-contornos2, hierarchy2 = cv2.findContours(pimg,
-    cv2.RETR_EXTERNAL ,
-    cv2.CHAIN_APPROX_SIMPLE)
+plt.imshow(modified_img, cmap='gray')
+plt.show()
 
 circ = cv2.HoughCircles(
-    pimg,
+    modified_img,
     cv2.HOUGH_GRADIENT,
     1,
     150,
-    param1=145,
-    param2=65,
-    minRadius=50,
+    param1=80,
+    param2=15,
+    minRadius=40,
     maxRadius=120
 )
 

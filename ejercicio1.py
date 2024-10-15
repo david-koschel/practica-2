@@ -6,10 +6,6 @@ img = cv2.imread('moneditas.JPEG')
 gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 pimg = cv2.GaussianBlur(gris, (3, 3), 0)
 
-contornos2, hierarchy2 = cv2.findContours(pimg,
-    cv2.RETR_EXTERNAL ,
-    cv2.CHAIN_APPROX_SIMPLE)
-
 circ = cv2.HoughCircles(
     pimg,
     cv2.HOUGH_GRADIENT,
